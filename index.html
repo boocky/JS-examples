@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>AJAX JSON</title>
+	<script>
+    var btn1 = document.getElementById('btn');
+    var mainUl1 = document.getElementById('mainUl');
+    var text = "";
+
+    btn1.addEventListener('click', function() {
+
+	var xhttp = new XMLHttpRequest();
+
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4 && xhttp.status == 200) {
+				podaci(xhttp);
+		}
+    }
+		xhttp.open('GET', 'http://mysafeinfo.com/api/data?list=topcatnames&format=json', true);
+		xhttp.send();
+
+});
+
+function podaci(dataJson) {
+		var sviPodaci = JSON.parse(dataJson.responseText);
+		sviPodaci.forEach(function(e,i) {
+			text += "<li>"  + e.nm +  "</li>"
+		})
+		mainUl1.innerHTML = text; 
+} 
+
+  </script>
+</head>
+<body>
+	<div id="wrap">
+		<h1>Dohvatanje podataka u JSON formatu</h1>
+		<h2>Top cat names US</h2>
+		<ul id="mainUl"></ul>
+		<button id="btn">Click me</button>
+		<script src="main.js"></script>
+	</div>
+	
+</body>
+</html>
